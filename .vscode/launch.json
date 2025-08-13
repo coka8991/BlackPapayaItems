@@ -5,13 +5,13 @@
         "name": "Debug Streamlit App",
         "type": "debugpy",
         "request": "launch",
-        "module": "streamlit",
+        "module": "uvicorn",
         "args": [
-          "run",
-          "app.py"
+          "app:app",
+          "--reload"
         ],
-        "cwd": "${workspaceFolder}/scripts",
-        "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+        "cwd": "${workspaceFolder}/src",
+        "python": "${workspaceFolder}/venv/Scripts/python.exe",
         "console": "integratedTerminal"
       }
     ]
