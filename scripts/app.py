@@ -13,7 +13,7 @@ df["response"] = df["response"].apply(lambda x: "Tier Set" if x == "Tierset" els
 df["date"] = pd.to_datetime(df["date"])
 
 #filtramos por el inicio del parche
-df=df[df["date"] >= "2025-03-5"]
+df=df[df["date"] >= "2025-08-13"]
 
 #los boes tienen esta caracteristica por eso los quitamos
 df=df[df["votes"]!="nil"]
@@ -39,12 +39,12 @@ FiltroPorDif=["Liberation of Undermine-"+i for i in FiltroPorDif]
 
 dfFiltered = df[df["response"].isin(FiltroPorEspeciales)]
 dfFiltered = dfFiltered[dfFiltered["instance"].isin(FiltroPorDif)]
-dfFiltered.loc[:, "WowHeadURL"] = dfFiltered.apply(
-    lambda row: "https://www.wowhead.com/item=" + str(row["itemID"]) + "?bonus=" + ":".join(row["itemString"].split(":")[14:]),
-    axis=1
-)
+#dfFiltered.loc[:, "WowHeadURL"] = dfFiltered.apply(
+#    lambda row: "https://www.wowhead.com/item=" + str(row["itemID"]) + "?bonus=" + ":".join(row["itemString"].split(":")[14:]),
+#    axis=1
+#)
 
-dfFiltered.loc[:, "WowHeadURL_Link"] = dfFiltered["WowHeadURL"].apply(lambda url: f"[{url}]({url})")
+#dfFiltered.loc[:, "WowHeadURL_Link"] = dfFiltered["WowHeadURL"].apply(lambda url: f"[{url}]({url})")
 
 # Crear un DataFrame que cuente cuántas veces aparece cada valor en FiltroPorEspeciales para cada jugador
 ItemsEspeciales = dfFiltered.pivot_table(
@@ -93,7 +93,7 @@ with col2:
 
 options = st.selectbox("Selecciona Un player para ver los items",ItemsEspeciales["player"].unique(),index=None)
 if options!=None:
-    result = dfFiltered[dfFiltered["player"] == options][["item","equipLoc", "response", "date", "votes", "instance", "note", "WowHeadURL_Link"]]
+    result = dfFiltered[dfFiltered["player"] == options][["item","equipLoc", "response", "date", "votes", "instance", "note"]]
     st.markdown(result.to_markdown())
 
 
