@@ -20,5 +20,6 @@ COPY Items.csv /app/
 COPY --from=frontend /app/src/frontend/dist /app/src/frontend/dist
 
 EXPOSE 8000
+WORKDIR /app/src
 
-CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
