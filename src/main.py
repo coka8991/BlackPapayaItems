@@ -14,7 +14,7 @@ app = FastAPI(title="Black Papaya Items")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=["http://localhost:5173","https://blackpapayaitems.onrender.com"],
     allow_methods=["GET"],
     allow_headers=["*"],
 )

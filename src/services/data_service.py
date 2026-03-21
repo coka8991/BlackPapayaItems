@@ -72,7 +72,7 @@ def get_player_items(
     player: str,
     responses: list[str],
     difficulties: list[str],
-    min_date: str = "2025-08-13",
+    min_date: str = "2026-03-18",
 ) -> list[dict]:
     df = get_cleaned(min_date)
     instances = [f"{RAID_PREFIX}{d}" for d in difficulties for RAID_PREFIX in RAID_PREFIXES]
@@ -88,9 +88,9 @@ def get_player_items(
     return result.to_dict(orient="records")
 
 
-def get_tiers_summary(min_date: str = "2025-03-05") -> list[dict]:
+def get_tiers_summary(min_date: str = "2026-03-18") -> list[dict]:
     df = get_cleaned(min_date)
-    tiers = df[(df["response"] == "Tier Set") & (df["equipLoc"].isna())]
+    tiers = df[(df["response"] == "Tier Set")]
     counts = (
         tiers.groupby("player")
         .size()

@@ -17,7 +17,7 @@ function qs(params: Record<string, string | string[]>): string {
 export async function fetchItemsSummary(
     responses: string[],
     difficulties: string[],
-    minDate = "2025-08-13"
+    minDate = "2026-03-18"
 ): Promise<ItemSummary[]> {
     const q = qs({ responses, difficulties, min_date: minDate });
     const res = await fetch(`${BASE}/items/summary?${q}`);
@@ -28,7 +28,7 @@ export async function fetchPlayerItems(
     player: string,
     responses: string[],
     difficulties: string[],
-    minDate = "2025-08-13"
+    minDate = "2026-03-18"
 ): Promise<PlayerItem[]> {
     const q = qs({ responses, difficulties, min_date: minDate });
     const res = await fetch(
@@ -38,7 +38,7 @@ export async function fetchPlayerItems(
 }
 
 export async function fetchTiersSummary(
-    minDate = "2025-03-05"
+    minDate = "2026-03-18"
 ): Promise<TierSummary[]> {
     const res = await fetch(`${BASE}/tiers/summary?min_date=${minDate}`);
     return res.json();
