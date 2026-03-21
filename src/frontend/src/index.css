@@ -1,0 +1,25 @@
+:root {
+  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
+  font: 15px/1.5 var(--sans);
+  color-scheme: light dark;
+  color: #e0e0e0;
+  background: #121218;
+}
+
+body {
+  margin: 0;
+}
+
+#root {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+h1 {
+  font-size: 28px;
+  margin: 16px 0;
+}
+
+table {
+  font-size: 14px;
+}

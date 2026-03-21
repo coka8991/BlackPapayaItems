@@ -1,22 +1,24 @@
-# Usar la imagen base de Python 3.13.0
+# --- Stage 1: Build React frontend ---
+FROM node:20-slim AS frontend
+WORKDIR /app/src/frontend
+COPY src/frontend/package.json src/frontend/package-lock.json ./
+RUN npm ci
+COPY src/frontend/ ./
+RUN npm run build
+
+# --- Stage 2: Python backend ---
 FROM python:3.11.9-slim
+WORKDIR /app
 
-# Instalar dependencias del sistema
-RUN apt-get update && apt-get install -y git
+COPY src/requirements.txt /app/src/
+RUN pip install --no-cache-dir -r /app/src/requirements.txt
 
-WORKDIR /app/scripts
+COPY src/ /app/src/
+COPY Items.csv /app/
 
-# Copiar el archivo de dependencias al nivel raíz del contenedor
-COPY requirements.txt /app/
+# Copy built frontend into the expected location
+COPY --from=frontend /app/src/frontend/dist /app/src/frontend/dist
 
-# Instalar las dependencias especificadas en requirements.txt
-RUN pip install --no-cache-dir -r /app/requirements.txt
+EXPOSE 8000
 
-# Copiar todo el contenido del proyecto al contenedor
-COPY . /app/
-
-# Exponer el puerto predeterminado de Streamlit (8501)
-EXPOSE 8501
-
-# Comando para ejecutar la aplicación con Streamlit
-CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]
