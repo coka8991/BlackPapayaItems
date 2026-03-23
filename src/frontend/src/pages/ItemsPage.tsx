@@ -12,7 +12,7 @@ import { fetchItemsSummary, fetchPlayerItems } from "../api";
 import type { ItemSummary, PlayerItem } from "../types";
 
 const RESPONSE_OPTIONS = ["Tier Set", "Bis", "Catalyst", "Mejora"];
-const DIFFICULTY_OPTIONS = ["Normal", "Heroic", "Mythic"];
+const DIFFICULTY_OPTIONS = ["Normal", "Heroica", "Mítica"];
 
 const COLORS: Record<string, string> = {
     Bis: "darkorange",
