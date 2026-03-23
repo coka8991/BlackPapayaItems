@@ -25,6 +25,28 @@
   color: #fff;
 }
 
+.reload-btn {
+  margin-left: auto;
+  padding: 6px 14px;
+  background: transparent;
+  color: #aaa;
+  border: 1px solid #555;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.reload-btn:hover {
+  background: #2a2a3e;
+  color: #fff;
+}
+
+.reload-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .content {
   padding: 24px;
 }

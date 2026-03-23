@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Query
 
-from services.data_service import get_items_summary, get_player_items, get_tiers_summary
+from services.data_service import get_items_summary, get_player_items, get_tiers_summary, reload
 from core.logger_config import get_logger
 logger = get_logger(__name__)
 
@@ -35,3 +35,9 @@ def player_items(
 def tiers_summary(min_date: str = "2026-03-18"):
     logger.info(f"Fetching tiers summary with min_date={min_date}")
     return get_tiers_summary(min_date)
+
+@router.put("/items/refresh")
+def refresh_data():
+    logger.info("Data refresh endpoint called")
+    reload()
+    return {"message": "Data refresh triggered"}

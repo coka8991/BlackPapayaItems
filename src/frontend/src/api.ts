@@ -43,3 +43,7 @@ export async function fetchTiersSummary(
     const res = await fetch(`${BASE}/tiers/summary?min_date=${minDate}`);
     return res.json();
 }
+
+export async function refreshData(): Promise<void> {
+    await fetch(`${BASE}/items/refresh`, { method: "PUT" });
+}
