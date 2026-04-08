@@ -55,7 +55,6 @@ if (-not $OutputPath) {
 }
 
 Write-Host "Leyendo: $SavedVarsPath" -ForegroundColor Cyan
-
 # --- Read file and extract RCLootCouncilLootDB block ---
 $rawContent = Get-Content $SavedVarsPath -Raw -Encoding UTF8
 
@@ -67,6 +66,16 @@ if (-not $lootDBMatch.Success) {
 }
 
 $lootDBContent = $lootDBMatch.Groups[1].Value
+
+# --- Show available fields from the Lua file ---
+$camposLua = [regex]::Matches($lootDBContent, '\["(\w+)"\]\s*=') |
+    ForEach-Object { $_.Groups[1].Value } |
+    Select-Object -Unique |
+    Sort-Object
+Write-Host ""
+Write-Host "Campos encontrados en el archivo Lua:" -ForegroundColor Magenta
+Write-Host ("  " + ($camposLua -join ", ")) -ForegroundColor Gray
+Write-Host ""
 
 # --- Simple Lua table parser ---
 # We parse the factionrealm entries to extract loot history
@@ -179,6 +188,7 @@ foreach ($line in $lines) {
                     note          = if ($entryFields.ContainsKey('note'))          { $entryFields['note'] }          else { '' }
                     owner         = if ($entryFields.ContainsKey('owner'))         { $entryFields['owner'] }         else { 'Unknown' }
                     typeCode      = if ($entryFields.ContainsKey('typeCode'))      { $entryFields['typeCode'] }      else { '' }
+                    tierToken     = if ($entryFields.ContainsKey('tierToken'))     { $entryFields['tierToken'] }     else { '' }
                 }
                 $entries.Add($entry)
                 $totalEntries++
@@ -231,8 +241,3 @@ $entries | Export-Csv -Path $OutputPath -NoTypeInformation -Encoding UTF8
 
 Write-Host ""
 Write-Host "Exportacion completada!" -ForegroundColor Green
-Write-Host "  Entradas: $($entries.Count)" -ForegroundColor Yellow
-Write-Host "  Archivo:  $OutputPath" -ForegroundColor Yellow
-Write-Host ""
-Write-Host "Jugadores encontrados:" -ForegroundColor Cyan
-$entries | Group-Object -Property player | Sort-Object Count -Descending | Format-Table Name, Count -AutoSize
